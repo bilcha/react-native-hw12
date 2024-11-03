@@ -14,6 +14,7 @@ import {
 import { colors } from "../styles/global";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
 
@@ -22,6 +23,8 @@ const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSecure, setIsSecure] = useState(true);
+
+  const navigation = useNavigation();
 
   const handleNameChange = (value: string) => {
     setName(value);
@@ -39,10 +42,14 @@ const RegistrationScreen = () => {
     console.log(
       `RegistrationData: name: ${name}, email: ${email}, password: ${password}`
     );
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Home" }],
+    });
   };
   const passwordShow = (
     <TouchableOpacity onPress={showPassword}>
-      <Text style={styles.inputBtn}>Показати</Text>
+      <Text style={[styles.inputBtn, styles.mainText]}>Показати</Text>
     </TouchableOpacity>
   );
 
@@ -83,8 +90,22 @@ const RegistrationScreen = () => {
             </View>
 
             <View style={styles.buttonContainer}>
-              <Button text="Зареєстуватися" onPress={handleRegistration} />
-              <Text style={styles.toLoginBtn}>Вже є акаунт? Увійти</Text>
+              <Button
+                onPress={handleRegistration}
+                outerStyles={styles.buttonCTA}
+              >
+                <Text style={[styles.btnText, styles.mainText]}>
+                  Зареєструватися
+                </Text>
+              </Button>
+              <Text style={[styles.mainText, styles.toLoginBtn]}>
+                Вже є акаунт?
+                <TouchableWithoutFeedback
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  <Text style={[styles.mainText, styles.btnLink]}>Увійти</Text>
+                </TouchableWithoutFeedback>
+              </Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -112,8 +133,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   inner: {
+    height: "65%",
     paddingHorizontal: 16,
-    paddingBottom: 80,
     backgroundColor: colors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -148,14 +169,27 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   inputBtn: {
-    fontSize: 16,
-    lineHeight: 19,
     color: colors.blueText,
   },
+  mainText: {
+    fontSize: 16,
+    fontWeight: "400",
+    lineHeight: 19,
+  },
   toLoginBtn: {
+    flexDirection: "row",
     color: colors.blueText,
     textAlign: "center",
-    fontSize: 16,
-    lineHeight: 19,
+  },
+  btnText: {
+    color: colors.white,
+  },
+  buttonCTA: {
+    backgroundColor: colors.accentOrange,
+  },
+  btnLink: {
+    color: colors.blueText,
+    textDecorationLine: "underline",
+    marginLeft: 8,
   },
 });

@@ -5,4 +5,5 @@ export const colors = {
   inputBackground: "#F6F6F6",
   accentOrange: "#FF6C00",
   blueText: "#1B4371",
+  darkGrey: "#BDBDBD",
 };

@@ -21,14 +21,23 @@ const Input: FC<InputProps> = ({
   onValueChange,
   secureTextEntry = false,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const onFocus = () => {
+    setIsFocused(true);
+  };
+  const onBlur = () => {
+    setIsFocused(false);
+  };
   return (
-    <View style={[styles.input, outerStyles]}>
+    <View style={[styles.input, isFocused && styles.focused, outerStyles]}>
       <TextInput
         placeholder={placeholder}
         value={value}
         autoFocus={autoFocus}
         onChangeText={onValueChange}
         secureTextEntry={secureTextEntry}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       {rightButton}
     </View>
@@ -43,6 +52,10 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     backgroundColor: colors.inputBackground,
     padding: 16,
+  },
+  focused: {
+    borderColor: colors.accentOrange,
+    backgroundColor: colors.white,
   },
 });
 
