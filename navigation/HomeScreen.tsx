@@ -7,8 +7,8 @@ import HomeIcon from "../icons/homeIcon";
 import LogoutIcon from "../icons/logoutIcon";
 import PostsScreen from "../Screens/PostsScreen";
 import { useNavigation } from "@react-navigation/native";
-import CreatePostsScreen from "../Screens/CreatePostsScreen";
 import MapScreen from "../Screens/MapScreen";
+import CreatePostsScreen from "../Screens/CreatePostsScreen";
 
 const Tab = createBottomTabNavigator();
 const BottomNavigator = () => {
@@ -19,22 +19,25 @@ const BottomNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="Publication"
-      screenOptions={{
+      screenOptions={({ route }) => ({
         headerRightContainerStyle: { paddingRight: 16 },
         headerLeftContainerStyle: { paddingLeft: 16 },
         headerTitleAlign: "center",
         headerTitleStyle: styles.headerTabStyle,
-        tabBarStyle: styles.tabBarStyle,
+        tabBarStyle: [
+          styles.tabBarStyle,
+          route.name === "CreatePosts" && { display: "none" },
+        ],
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.white,
         tabBarInactiveTintColor: "rgba(33, 33, 33, 0.8)",
-      }}
+      })}
     >
       <Tab.Screen
-        name="Home"
-        component={MapScreen}
+        name="Publication"
+        component={PostsScreen}
         options={{
-          title: "Мапа",
+          title: "Публікації",
           headerRight: () => <LogoutIcon onPress={handleLogout} />,
           tabBarIcon: ({ focused, color, size = 24 }) => (
             <View
@@ -46,11 +49,19 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Publication"
-        component={PostsScreen}
+        name="CreatePosts"
+        component={CreatePostsScreen}
         options={{
-          title: "Публікації",
-          headerRight: () => <LogoutIcon onPress={handleLogout} />,
+          title: "Створити публікацію",
+          headerLeft: () => (
+            <Feather
+              name="arrow-left"
+              size={24}
+              color={"#212121"}
+              style={{ marginLeft: 10 }}
+              onPress={() => navigation.goBack()}
+            />
+          ),
           tabBarIcon: ({ focused, color, size = 24 }) => (
             <View
               style={[styles.iconContainer, focused && styles.activeBackground]}
@@ -71,28 +82,6 @@ const BottomNavigator = () => {
             >
               <Feather name="user" color={color} size={size} />
             </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="CreatePostsScreen"
-        component={CreatePostsScreen}
-        options={{
-          tabBarStyle: { display: "none" },
-          title: "Створити публікацію",
-          headerLeft: () => (
-            <Feather
-              name="arrow-left"
-              size={24}
-              color={"#212121"}
-              style={{ marginLeft: 10 }}
-              onPress={() =>
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: "Publication" }],
-                })
-              }
-            />
           ),
         }}
       />

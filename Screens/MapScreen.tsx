@@ -2,8 +2,8 @@ import { View, StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 
 const MapScreen = () => {
-  const latitude = 50.4501; // Center latitude of Kyiv
-  const longitude = 30.5234; // Center longitude of Kyiv
+  const latitude = 50.4501;
+  const longitude = 30.5234;
 
   return (
     <View style={styles.container}>

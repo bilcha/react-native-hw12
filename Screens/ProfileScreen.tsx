@@ -10,6 +10,7 @@ import { colors } from "../styles/global";
 import LogoutIcon from "../icons/logoutIcon";
 import CrossIcon from "../icons/crossIcon";
 import { useNavigation } from "@react-navigation/native";
+import PostItem from "../components/PostItem";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
 
@@ -40,6 +41,7 @@ const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>Natali Romanova</Text>
+        <PostItem />
       </View>
     </View>
   );

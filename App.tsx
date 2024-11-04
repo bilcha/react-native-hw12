@@ -9,8 +9,10 @@ import LoginScreen from "./Screens/LoginScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./navigation/HomeScreen";
+import MapScreen from "./Screens/MapScreen";
+import ComentsScreen from "./Screens/ComentsScreen";
+import CreatePostsScreen from "./Screens/CreatePostsScreen";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 const MainStack = createStackNavigator();
 
@@ -54,6 +56,30 @@ export default function App() {
           options={{
             headerShown: false,
             presentation: "card",
+          }}
+        />
+        <MainStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            presentation: "modal",
+            title: "Мапа",
+          }}
+        />
+        <MainStack.Screen
+          name="CreatePosts"
+          component={CreatePostsScreen}
+          options={{
+            title: "Створити публікацію",
+            presentation: "modal",
+          }}
+        />
+        <MainStack.Screen
+          name="Coments"
+          component={ComentsScreen}
+          options={{
+            title: "Коментарі",
+            presentation: "modal",
           }}
         />
       </MainStack.Navigator>
